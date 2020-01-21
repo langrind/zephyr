@@ -28,7 +28,7 @@ endif # GPIO_MCUX_IGPIO
 
 if I2C_MCUX_LPI2C
 
-config I2C_1
+config I2C_3
 	default y
 
 endif # I2C_MCUX_LPI2C
