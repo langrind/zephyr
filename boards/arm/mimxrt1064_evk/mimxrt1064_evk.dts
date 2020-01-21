@@ -93,7 +93,7 @@
 	};
 };
 
-arduino_i2c: &i2c1 {};
+arduino_i2c: &i2c3 {};
 
 &lcdif1 {
 	status = "okay";
@@ -104,7 +104,7 @@ arduino_i2c: &i2c1 {};
 	};
 };
 
-&i2c1 {
+&i2c3 {
 	status = "okay";
 
 	mt9m114@48 {
