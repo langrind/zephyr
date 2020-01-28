@@ -37,6 +37,9 @@
 		uart-8 = &uart8;
 		usbd-1 = &usbd1;
 		usbd-2 = &usbd2;
+		/* i2s-1 = &flexio1_i2s; */
+		/* i2s-2 = &flexio2_i2s; */
+		/* i2s-3 = &flexio3_i2s; */
 	};
 
 	cpus {
@@ -510,6 +513,59 @@
 				interrupts = <150 0>;
 				#pwm-cells = <1>;
 			};
+		};
+
+		/*
+		 * Nik: Not sure what the zephyr way to do this is. It doesn't look like there are
+		 * DTS entries for FlexIO peripherals in any files. That is, there are entries
+		 * for FlexPWM, but no entry for FlexIOPWM. For now, I am simply adding the
+		 * FlexIO peripherals I need as if they were peripherals dedicated to the function
+		 * I need. So, here is FlexIO-I2S. Any other flexio-based peripheral would re-use
+		 * the base address, but I don't think that would cause a problem
+		 *
+		 * A different way to do it would be to nest: make an outer entry for flexio1,
+		 * which would then contain flexio1_i2s. There could then be other entries, such
+		 * as UART.
+		 *
+		 * Both of these approaches seem to suffer from a combinatorial expansion in the
+		 * size of this file after time has passed and lots of people have added support for
+		 * their particular configuration to this file
+		 *
+		 * After reading further, I see at least one design guideline:
+		 * "The board-specific .dts files enable nodes, define the Zephyr-specific items,
+		 *  and also adds board-specific changes like gpio/pinmux assignments. These
+		 *  types of things will vary based on the board layout and application use."
+		 *
+		 * Which doesn't really clear it up for me, but it helps - first need to know
+		 * how do you "enable nodes"? Is it this type of thing:
+		 *		i2c-1 = &i2c1;
+                 *
+		 */
+		 flexio1_i2s: flexio1_i2s@401ac000 {
+			compatible = "nxp,flexioi2s";
+			reg = <0x401ac000 0x4000>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			interrupts = <90 0>;
+			label = "FLEXIO1_I2S";
+		};
+
+		 flexio2_i2s: flexio2_i2s@401b0000 {
+			compatible = "nxp,flexioi2s";
+			reg = <0x401b0000 0x4000>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			interrupts = <91 0>;
+			label = "FLEXIO2_I2S";
+		};
+
+		 flexio3_i2s: flexio3_i2s@42020000 {
+			compatible = "nxp,flexioi2s";
+			reg = <0x42020000 0x4000>;
+			#address-cells = <1>;
+			#size-cells = <0>;
+			interrupts = <156 0>;
+			label = "FLEXIO3_I2S";
 		};
 
 		eth: ethernet@402d8000 {

@@ -93,6 +93,11 @@
 	};
 };
 
+/* Nik: changed from i2c1 to i2c3 because in our project we are using i2c3 to
+ * connect to the external codec. I don't know why we couldn't stay with i2c1
+ * but probably because Dan identified a resource conflict. (And he probably
+ * told me about it and I forgot...)
+ */
 arduino_i2c: &i2c3 {};
 
 &lcdif1 {
@@ -106,6 +111,16 @@ arduino_i2c: &i2c3 {};
 
 &i2c3 {
 	status = "okay";
+
+	/* clock-frequency = <I2C_BITRATE_FAST>;  - want to add this at some point */
+
+	/* codec0: adau1372@3c { */
+	adau1372@3c {
+		compatible = "adi,adau1372";
+		reg = <0x3C>;
+		label = "ADAU1372";
+		status = "okay";
+	};
 
 	mt9m114@48 {
 		compatible = "aptina,mt9m114";
@@ -147,3 +162,12 @@ arduino_i2c: &i2c3 {};
 		};
 	};
 };
+
+/*
+ * Works (i2s_mxrt_initialize is invoked) even if i take this out.
+ * I think I want to add a slave dev (adau1372) to flexio3_i2s, but I am
+ * confused about that because adau1372 is already added to I2C bus
+ * &flexio3_i2s {
+ *	status = "okay";
+ * };
+ */

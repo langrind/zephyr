@@ -1,0 +1,13 @@
+# Copyright (c) 2020, Nik Langrind
+# SPDX-License-Identifier: Apache-2.0
+
+description: Analog Devices ADAU1372 Audio DAC
+
+compatible: "adi,adau1372"
+
+include: i2c-device.yaml
+
+properties:
+    reg:
+      required: true
+

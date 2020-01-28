@@ -6,3 +6,4 @@ include($ENV{ZEPHYR_BASE}/cmake/app/boilerplate.cmake NO_POLICY_SCOPE)
 project(adau1372_regs)
 
 target_sources(app PRIVATE src/main.c)
+target_sources(app PRIVATE src/test_bindings.c)

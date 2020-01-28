@@ -1,0 +1,9 @@
+# Copyright (c) 2020 Nik Langrind
+# SPDX-License-Identifier: Apache-2.0
+
+config AUDIO_ADAU1372
+	bool "ADAU1372 DAC support"
+	depends on I2C
+	depends on I2S
+	help
+	  Enable ADAU1372 support on the selected board

@@ -1,0 +1,39 @@
+# MXRT I2S driver configuration options
+
+# Copyright (c) 2020 Nik Langrind
+# SPDX-License-Identifier: Apache-2.0
+
+menuconfig I2S_MXRT
+	bool "MXRT MCU FlexIO-based I2S controller driver"
+	depends on SOC_SERIES_IMX_RT
+#	select DMA
+	help
+	  Enable FlexIO-based I2S support on the MXRT family of processors.
+	  (Tested on the nothing yet)
+
+if I2S_MXRT
+
+config I2S_MXRT_RX_BLOCK_COUNT
+	int "RX queue length"
+	default 4
+
+config I2S_MXRT_TX_BLOCK_COUNT
+	int "TX queue length"
+	default 4
+
+config FLEXIO1_I2S
+	bool "FlexIO 1 I2S port"
+	help
+	  Enable FlexIO 1 I2S controller.
+
+config FLEXIO2_I2S
+	bool "FlexIO 2 I2S port"
+	help
+	  Enable FlexIO 2 I2S controller.
+
+config FLEXIO3_I2S
+	bool "FlexIO 3 I2S port"
+	help
+	  Enable FlexIO 3 I2S controller.
+
+endif # I2S_MXRT
