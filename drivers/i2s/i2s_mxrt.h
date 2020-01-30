@@ -8,6 +8,8 @@
 
 #include <fsl_flexio_i2s.h>
 #include <fsl_flexio_i2s_edma.h>
+#include <fsl_edma.h>
+#include <fsl_dmamux.h>
 #include <stdint.h>
 
 #define DEV_CFG(dev)							\
@@ -18,17 +20,23 @@
 
 /* Device constant configuration parameters */
 struct i2s_mxrt_cfg {
-  // SPI_TypeDef *i2s;
-  // struct stm32_pclken pclken;
-  // u32_t i2s_clk_sel;
-  // void (*irq_config)(struct device *dev);
+	FLEXIO_I2S_Type mcux_base;
+	// SPI_TypeDef *i2s;
+	// struct stm32_pclken pclken;
+	// u32_t i2s_clk_sel;
+	// void (*irq_config)(struct device *dev);
 
-  uint32_t unused;
+	uint32_t unused;
 };
 
 /* Device run time data */
 struct i2s_mxrt_data {
-  uint32_t unused;
+	edma_config_t dmaConfig;
+	DMAMUX_Type   *dmamuxBase;
+	edma_handle_t txDmaHandle;
+	edma_handle_t rxDmaHandle;
+
+	FLEXIO_Type   *flexioBase; /*!< FlexIO base pointer */
 };
 
 
