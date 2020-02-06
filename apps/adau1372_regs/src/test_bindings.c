@@ -47,21 +47,6 @@ static int cmd_test_i2s_binding(const struct shell *shell, size_t argc, char **a
     return -1;
   }
 
-#if 0
-  xxx configure as an I2S device w/ no regard to slave
-  /* configure codec */
-  struct audio_codec_cfg codec_cfg;
-  codec_cfg.dai_type = AUDIO_DAI_TYPE_I2S;
-  //codec_cfg.dai_cfg.i2s = i2s_cfg;
-  codec_cfg.dai_cfg.i2s.options = I2S_OPT_FRAME_CLK_SLAVE | I2S_OPT_BIT_CLK_SLAVE;
-  codec_cfg.dai_cfg.i2s.mem_slab = NULL;
-  // should define soc_get_ref_clk_freq() in soc/arm/nxp_imx/rt/soc.c ?
-  // codec_cfg.mclk_freq = soc_get_ref_clk_freq();
-  codec_cfg.mclk_freq = 600000000;
-
-  int rc = audio_codec_configure(codec_device, &codec_cfg);
-  printk("audio_codec_configure returned %d\n", rc);
-#endif
   return 0;
 }
 SHELL_STATIC_SUBCMD_SET_CREATE(sub_test_binding,

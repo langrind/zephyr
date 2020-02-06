@@ -182,6 +182,27 @@ static int cmd_i2s_xfer_test(const struct shell *shell, size_t argc, char **argv
   return 0;
 }
 
+extern int i2s_mxrt_test_int_transfer(struct device *dev, uint8_t *txData, size_t size);
+
+static int cmd_i2s_int_xfer_test(const struct shell *shell, size_t argc, char **argv)
+{
+  struct device *i2s_device;
+  i2s_device = device_get_binding(I2S_LABEL);
+  if (!i2s_device) {
+    printk("unable to find " I2S_LABEL " device");
+    return -1;
+  }
+
+  uint8_t txData[] = { 0x11, 0x22, 0x33,
+		       0x44, 0x55, 0x66,
+		       0x77, 0x88, 0x99,
+		       0xAA, 0xBB, 0xCC,
+  };
+  int rc = i2s_mxrt_test_int_transfer(i2s_device, txData, sizeof(txData));
+  (void)rc;
+  return 0;
+}
+
 int i2s_mxrt_test_receive(struct device *dev, uint8_t *rxData, size_t size);
 
 static int cmd_i2s_recv_test(const struct shell *shell, size_t argc, char **argv)
@@ -225,6 +246,7 @@ SHELL_STATIC_SUBCMD_SET_CREATE(sub_i2ct,
 			       SHELL_CMD(wr, NULL, "write_byte", cmd_i2c_write_byte),
 			       SHELL_CMD(xfer, NULL, "test send", cmd_i2s_xfer_test),
 			       SHELL_CMD(recv, NULL, "test recv", cmd_i2s_recv_test),
+			       SHELL_CMD(intfer, NULL, "test int send", cmd_i2s_int_xfer_test),
 			       SHELL_SUBCMD_SET_END /* Array terminated. */
 );
 SHELL_CMD_REGISTER(i2ct, &sub_i2ct, "i2c test commands", NULL);
